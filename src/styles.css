@@ -1,37 +1,15 @@
-img {
-    display: block;
-    max-width: 100%;
-  }
-
 .cat-info {
     
   display: flex;
-  gap: 10px;
-  max-width: 600px;
+  gap: 20px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 10px;
+  padding: 20px;
   background-color: #e5f3f2;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
-
-.box-img {
-    display: flex;
-    align-items: center;
-}
-
-.box {
-    width: 400px;
-}
-
-.ct-info {
-    
-    margin-top: 20px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: space-between; */
-    flex-wrap: wrap;
-    gap: 40px;
-    
+.breed-select {
+  max-width: 400px;
+  margin: auto;
 }

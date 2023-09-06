@@ -13,8 +13,8 @@ const error = document.querySelector('.error');
 
 loader.style.visibility = 'hidden';
 error.style.visibility = 'hidden';
-
 let arrBreedsId = [];
+
 fetchBreeds()
   .then(data => {
     data.forEach(breed => {
@@ -58,7 +58,7 @@ function renderCatMarkup(result) {
   return result
     .map(({ breeds, url }) => {
       return `<div class="box-img">
-      <img src="${url}" alt="${breeds.name}" width="400"/></div>
+      <img src="${url}" alt="${breeds.name}" width="500"/></div>
       <div class="box">
       <h1>${breeds[0].name}</h1>
       <p>${breeds[0].description}</p>
