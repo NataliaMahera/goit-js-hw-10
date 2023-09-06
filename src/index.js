@@ -16,18 +16,18 @@ new SlimSelect({
   select: 'select',
 });
 
-let arrBreedsId = [];
-fetchBreeds()
-  .then(data => {
-    data.forEach(element => {
-      arrBreedsId.push({ text: element.name, value: element.id });
-    });
-    new SlimSelect({
-      select: select,
-      data: arrBreedsId,
-    });
-  })
-  .catch(onFetchError);
+// let arrBreedsId = [];
+// fetchBreeds()
+//   .then(data => {
+//     data.forEach(element => {
+//       arrBreedsId.push({ text: element.name, value: element.id });
+//     });
+//     new SlimSelect({
+//       select: select,
+//       data: arrBreedsId,
+//     });
+//   })
+//   .catch(onFetchError);
 
 select.addEventListener('input', debounce(onSearchBreed, 1000));
 
@@ -40,6 +40,15 @@ function onSearchBreed(evt) {
 function showProfile({ image, name, description, temperament }) {
   catInfoContainer.innerHTML = `<div class="box-img"><img src="${image}" alt="${name}" width="400"/></div><div class="box"><h1>${name}</h1><p>${description}</p><p><b>Temperament:</b> ${temperament}</p></div>`;
 }
+
+// function catCardMarkup(result) {
+//   return result
+//     .map(({ image, name, description, temperament }) => {
+//       return `< ><img src="${image}" alt="${name}" width="400"/><h1>${name}</h1><p>${description}</p><p><b>Temperament:</b> ${temperament}</p></div>`;
+//     })
+//     .join('');
+// }
+// catInfoContainer.innerHTML = catCardMarkup;
 
 function onFetchError(error) {
   Notify.failure('Oops! Something went wrong! Try reloading the page!');
