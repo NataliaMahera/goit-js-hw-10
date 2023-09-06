@@ -69,5 +69,7 @@ function renderCatMarkup(result) {
 }
 
 function onFetchError() {
-  Notify.failure('Oops! Something went wrong! Try reloading the page!');
+  Notify.failure('Oops! Something went wrong! Try reloading the page!', {
+    position: 'center-top',
+  });
 }
