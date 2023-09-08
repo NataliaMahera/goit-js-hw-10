@@ -1,5 +1,5 @@
-import { fetchBreeds, fetchCatByBreed } from './cat-api';
-import './styles.css';
+import { fetchBreeds, fetchCatByBreed } from './js/cat-api.js';
+import '../css/styles.css';
 import debounce from 'lodash.debounce';
 import SlimSelect from 'slim-select';
 import 'slim-select/dist/slimselect.css';
@@ -11,39 +11,66 @@ const catInfoContainer = document.querySelector('.cat-info');
 const loader = document.querySelector('.loader');
 const error = document.querySelector('.error');
 
-loader.style.visibility = 'hidden';
-error.style.visibility = 'hidden';
-catInfoContainer.style.visibility = 'hidden';
+loader.classList.add('is-hidden');
+error.classList.add('is-hidden');
+catInfoContainer.classList.add('is-hidden');
 
-let arrBreedsId = [];
+// let arrBreedsId = [];
 
 fetchBreeds()
   .then(data => {
-    data.forEach(breed => {
-      arrBreedsId.push({ text: breed.name, value: breed.id });
-    });
+    select.innerHTML = data
+      .map(breed => {
+        return `<option value="${breed.id}">${breed.name}</option>`;
+      })
+      .join('');
+
     new SlimSelect({
       select: select,
-      data: arrBreedsId,
+      settings: {
+        placeholderText: 'Search',
+      },
+      //
     });
   })
   .catch(onFetchError);
+// .finally(() => {
+//   Loading.remove();
+// });
+
+// fetchBreeds()
+//   .then(data => {
+//     data.forEach(breed => {
+//       arrBreedsId.push({ text: breed.name, value: breed.id });
+//     });
+//     new SlimSelect({
+//       settings: {
+//         placeholderText: 'Search',
+//       },
+//       select: select,
+//       data: arrBreedsId,
+//     });
+//   })
+//   .catch(onFetchError)
+//   .finally(() => {
+//     Loading.remove();
+//   });
 
 select.addEventListener('change', debounce(onSearchBreed, 1000));
 
 function onSearchBreed(evt) {
-  catInfoContainer.style.visibility = 'hidden';
+  addClassHidden();
   Loading.standard('Loading data, please wait...', {
     clickToClose: true,
     svgSize: '19px',
   });
 
   const breedId = evt.target.value;
- 
+
   fetchCatByBreed(breedId)
     .then(data => {
-      catInfoContainer.style.visibility = 'visible';
       catInfoContainer.innerHTML = renderCatMarkup(data);
+      removeClassHidden();
       Loading.remove();
     })
     .catch(onFetchError);
@@ -64,7 +91,19 @@ function renderCatMarkup(result) {
 }
 
 function onFetchError() {
+  addClassHidden();
+  Loading.remove();
   Notify.failure('Oops! Something went wrong! Try reloading the page!', {
     position: 'center-top',
   });
+}
+
+function addClassHidden() {
+  select.classList.add('is-hidden');
+  catInfoContainer.classList.add('is-hidden');
+}
+
+function removeClassHidden() {
+  select.classList.remove('is-hidden');
+  catInfoContainer.classList.remove('is-hidden');
 }
