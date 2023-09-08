@@ -12,7 +12,9 @@ const loader = document.querySelector('.loader');
 const error = document.querySelector('.error');
 
 loader.style.visibility = 'hidden';
+catInfoContainer.style.visibility = 'hidden';
 error.style.visibility = 'hidden';
+
 let arrBreedsId = [];
 
 fetchBreeds()
@@ -31,6 +33,7 @@ fetchBreeds()
 select.addEventListener('change', debounce(onSearchBreed, 1000));
 
 function onSearchBreed(evt) {
+  catInfoContainer.style.visibility = 'hidden';
   Loading.standard('Loading data, please wait...', {
     clickToClose: true,
     svgSize: '19px',
@@ -40,19 +43,12 @@ function onSearchBreed(evt) {
   // console.log(evt.target);
   fetchCatByBreed(breedId)
     .then(data => {
+      catInfoContainer.style.visibility = 'visible';
       catInfoContainer.innerHTML = renderCatMarkup(data);
       Loading.remove();
     })
     .catch(onFetchError);
 }
-
-// function renderCatMarkup(result) {
-//   return result
-//     .map(({ breeds: { name, description, temperament }, url }) => {
-//       return `<div><img src="${url}" alt="${name}" width="400"/><h1>${name}</h1><p>${description}</p><p><b>Temperament:</b> ${temperament}</p></div>`;
-//     })
-//     .join('');
-// }
 
 function renderCatMarkup(result) {
   return result
