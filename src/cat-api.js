@@ -22,10 +22,6 @@ export function fetchCatByBreed(breedId) {
   });
 }
 
-fetchCatByBreed('crex')
-  .then(data => console.log(data))
-  .catch(err => console.log(err));
-
 // const url = 'https://api.thecatapi.com/v1';
 // const api_key =
 //   'live_JE40ZWz5TtBLr6X14F0x62Pn0qcsiG8Yd6dKhBir3RMHNQulDfrQKZVDqj58eqQk';
