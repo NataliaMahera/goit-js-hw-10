@@ -12,8 +12,8 @@ const loader = document.querySelector('.loader');
 const error = document.querySelector('.error');
 
 loader.style.visibility = 'hidden';
-catInfoContainer.style.visibility = 'hidden';
 error.style.visibility = 'hidden';
+catInfoContainer.style.visibility = 'hidden';
 
 let arrBreedsId = [];
 
@@ -28,7 +28,6 @@ fetchBreeds()
     });
   })
   .catch(onFetchError);
-// console.log(arrBreedsId);
 
 select.addEventListener('change', debounce(onSearchBreed, 1000));
 
@@ -40,7 +39,7 @@ function onSearchBreed(evt) {
   });
 
   const breedId = evt.target.value;
-  // console.log(evt.target);
+ 
   fetchCatByBreed(breedId)
     .then(data => {
       catInfoContainer.style.visibility = 'visible';
