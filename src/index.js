@@ -22,6 +22,7 @@ getBreeds()
       select: select,
     });
     select.classList.remove('is-hidden');
+    loader.classList.add('is-hidden');
   })
   .catch(onFetchError);
 
