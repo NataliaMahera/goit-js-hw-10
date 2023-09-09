@@ -1,4 +1,4 @@
-import { fetchBreeds, fetchCatByBreed } from './js/cat-api.js';
+import { getBreeds, getCatByBreed } from './js/cat-api.js';
 import '../css/styles.css';
 import debounce from 'lodash.debounce';
 import SlimSelect from 'slim-select';
@@ -14,16 +14,12 @@ const error = document.querySelector('.error');
 loader.classList.add('is-hidden');
 error.classList.add('is-hidden');
 catInfoContainer.classList.add('is-hidden');
-// select.classList.add('is-hidden');
 
-fetchBreeds()
+getBreeds()
   .then(data => {
     select.innerHTML = renderSelectValue(data);
     new SlimSelect({
       select: select,
-      settings: {
-        placeholderText: 'Search',
-      },
     });
     select.classList.remove('is-hidden');
   })
@@ -33,7 +29,6 @@ select.addEventListener('change', debounce(onSearchBreed, 1000));
 
 function onSearchBreed(evt) {
   addClassHidden();
-  loader.classList.remove('is-hidden');
   Loading.standard('Loading data, please wait...', {
     clickToClose: true,
     svgSize: '19px',
@@ -41,12 +36,10 @@ function onSearchBreed(evt) {
 
   const breedId = evt.target.value;
 
-  fetchCatByBreed(breedId)
+  getCatByBreed(breedId)
     .then(data => {
       catInfoContainer.innerHTML = renderCatMarkup(data);
       removeClassHidden();
-      Loading.remove();
-      loader.classList.add('is-hidden');
     })
     .catch(onFetchError)
     .finally(() => Loading.remove());
@@ -60,8 +53,8 @@ function renderSelectValue(breed) {
     .join('');
 }
 
-function renderCatMarkup(result) {
-  return result
+function renderCatMarkup(card) {
+  return card
     .map(({ breeds, url }) => {
       return `<div class="box-img">
       <img src="${url}" alt="${breeds.name}" width="500"/></div>
@@ -92,82 +85,3 @@ function removeClassHidden() {
   select.classList.remove('is-hidden');
   catInfoContainer.classList.remove('is-hidden');
 }
-
-// fetchBreeds()
-//   .then(data => {
-//     select.innerHTML = renderListOption(data);
-//     // new SlimSelect({
-//     //   select: select,
-//     //   data: arrBreedsId,
-//     //   settings: {
-//     //     placeholderText: 'Search',
-//     //   },
-//     // });
-//   })
-//   .catch(onFetchError);
-// // .finally(() => {
-// //   Loading.remove();
-// // });
-
-// select.addEventListener('change', debounce(onSearchBreed, 1000));
-
-// function onSearchBreed(evt) {
-//   addClassHidden();
-//   loader.classList.remove('is-hidden');
-//   // Loading.standard('Loading data, please wait...', {
-//   //   clickToClose: true,
-//   //   svgSize: '19px',
-//   // });
-
-//   const breedId = evt.target.value;
-
-//   fetchCatByBreed(breedId)
-//     .then(data => {
-//       catInfoContainer.innerHTML = renderCatMarkup(data);
-//       removeClassHidden();
-//       loader.classList.add('is-hidden');
-//       // Loading.remove();
-//     })
-//     .catch(onFetchError);
-// }
-
-// function renderCatMarkup(result) {
-//   return result
-//     .map(({ breeds, url }) => {
-//       return `<div class="box-img">
-//       <img src="${url}" alt="${breeds.name}" width="500"/></div>
-//       <div class="box">
-//       <h1>${breeds[0].name}</h1>
-//       <p>${breeds[0].description}</p>
-//       <p><b>Temperament:</b> ${breeds[0].temperament}</p>
-//       </div>`;
-//     })
-//     .join('');
-// }
-
-// function renderListOption(breed) {
-//   return breed
-//     .map(({ id, name }) => {
-//       return `<option value='${id}'>${name}</option>`;
-//     })
-//     .join('');
-// }
-
-// function onFetchError() {
-//   addClassHidden();
-//   // Loading.remove();
-//   Notify.failure('Oops! Something went wrong! Try reloading the page!', {
-//     position: 'center-top',
-//   });
-// }
-
-// function addClassHidden() {
-//   select.classList.add('is-hidden');
-//   catInfoContainer.classList.add('is-hidden');
-//   loader.classList.add('is-hidden');
-// }
-
-// function removeClassHidden() {
-//   select.classList.remove('is-hidden');
-//   catInfoContainer.classList.remove('is-hidden');
-// }
