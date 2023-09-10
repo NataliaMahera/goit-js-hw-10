@@ -1,5 +1,4 @@
 import { getBreeds, getCatByBreed } from './js/cat-api.js';
-import '../css/styles.css';
 import debounce from 'lodash.debounce';
 import SlimSelect from 'slim-select';
 import 'slim-select/dist/slimselect.css';
