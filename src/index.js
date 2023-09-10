@@ -42,7 +42,10 @@ function onSearchBreed(evt) {
       removeClassHidden();
     })
     .catch(onFetchError)
-    .finally(() => Loading.remove());
+    .finally(() => {
+      Loading.remove();
+      select.classList.remove('is-hidden');
+    });
 }
 
 function renderSelectValue(breed) {
@@ -70,9 +73,7 @@ function renderCatMarkup(card) {
 function onFetchError() {
   addClassHidden();
   Loading.remove();
-  Notify.failure('Oops! Something went wrong! Try reloading the page!', {
-    position: 'center-top',
-  });
+  Notify.failure('Oops! Something went wrong! Try reloading the page!');
 }
 
 function addClassHidden() {
